@@ -6,7 +6,7 @@ app.get('/', function (req, res) {
   res.json({
     msg: 'Hello from New Build',
     todo: 'Connecto webhook to circleCi',
-    test: 'test'
+    test: 'test1'
   });
 });
 
