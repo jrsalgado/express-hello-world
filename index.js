@@ -5,7 +5,7 @@ var port = 80;
 app.get('/', function (req, res) {
   res.json({
     msg: 'Hello from New Build',
-    todo: ['Connecto webhook to circleCi','Migrate all'],
+    todo: ['Connecto webhook to circleCi','error messaging service','Migrate all'],
     test: 'test'
   });
 });
