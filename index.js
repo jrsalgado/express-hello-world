@@ -27,14 +27,49 @@ var getuserSchema = {
   }
 }
 
+const authParamsSchema = joi.object({
+  usr: joi.string().required()
+})
+
+function auth(params){
+  joi.assert(params, authParamsSchema);
+  
+  console.log(params);
+
+  const usr = params.usr
+  const users = {
+    jrsalgado: true
+  }
+  return users[usr];
+}
+
 app.get('/api/user/:user',
   validator(getuserSchema),
+  function(req, res, next){
+    let isAuth;
+    isAuth = auth({usr: req.params.user});
+    console.log(isAuth)
+
+
+    if(isAuth){
+      return next();
+    }else{
+      return next(new Error('usuario no authorizado'));
+    }
+
+  },
   async function (req, res) {
 
     const user = await fetchPeople(req.params.user);
 
     res.json({user});
 });
+
+// Error handler
+app.use(function(error, req, res, next){
+  console.error(error)
+  res.json(error)
+})
 
 var httpServer = http.createServer(app);
 httpServer.listen(port, function () {
